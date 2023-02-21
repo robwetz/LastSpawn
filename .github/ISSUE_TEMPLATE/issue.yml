@@ -37,24 +37,7 @@ body:
     attributes:
       label: Branch
       options:
-        - 3.3.5
         - master
-    validations:
-      required: true
-  - type: textarea
-    id: commit
-    attributes:
-      label: TC rev. hash/commit
-      description: |
-        Copy the result of server debug command (if you need to run it from client get prat addon)
-    validations:
-      required: true
-  - type: input
-    id: os
-    attributes:
-      label: Operating system
-      description: |
-        Operating System, i.e. Windows 10 x64, Debian 10 x64, etc
     validations:
       required: true
   - type: textarea
@@ -65,4 +48,4 @@ body:
         List which custom changes you have applied, i.e. transmog patch, etc.
         Write "None" if you don't have any changes applied.
     validations:
-      required: true
+      required: false
