@@ -1,3 +1,4 @@
+ALTER TABLE `creature_template` ADD COLUMN `InhabitType` TINYINT UNSIGNED NOT NULL DEFAULT '0' AFTER `ScriptName`;
 UPDATE `creature_template` SET `InhabitType` = 4 WHERE `entry` = 46185;	-- Make Sanitron 500 able to Fly
 UPDATE `creature_template` SET `npcflag` = 16777216 WHERE `entry` = 46185; -- Enable spellclick
 UPDATE `creature_template` SET `AIName` = 'SmartAI' WHERE `entry` = 46185; -- Enable use of SmartScript for Sanitron 500
