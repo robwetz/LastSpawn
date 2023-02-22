@@ -26,6 +26,7 @@
 #include "CreatureAIImpl.h"
 #include "TemporarySummon.h"
 #include "ScriptedCreature.h"
+#include <Containers.h>
 
  // ********************************************
  // * Scripting in this section occurs on ship *
