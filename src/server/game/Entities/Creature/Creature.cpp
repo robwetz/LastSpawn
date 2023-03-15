@@ -684,7 +684,6 @@ bool Creature::UpdateEntry(uint32 entry, CreatureData const* data /*= nullptr*/,
 
     SetIsCombatDisallowed((cInfo->flags_extra & CREATURE_FLAG_EXTRA_CANNOT_ENTER_COMBAT) != 0);
 
-    LoadTemplateRoot();
     InitializeMovementFlags();
 
     LoadCreaturesAddon();
@@ -1303,6 +1302,19 @@ bool Creature::CanResetTalents(Player* player) const
         && player->GetClass() == GetCreatureTemplate()->trainer_class;
 }
 
+uint32 Creature::GetLootId() const
+{
+    if (m_lootId)
+        return *m_lootId;
+
+    return GetCreatureTemplate()->lootid;
+}
+
+void Creature::SetLootId(Optional<uint32> lootId)
+{
+    m_lootId = lootId;
+}
+
 void Creature::SetTappedBy(Unit const* unit, bool withGroup)
 {
     // set the player whose group should receive the right
@@ -1882,8 +1894,13 @@ void Creature::SetSpawnHealth()
 
 void Creature::LoadTemplateRoot()
 {
-    if (GetMovementTemplate().IsRooted())
-        SetControlled(true, UNIT_STATE_ROOT);
+    SetTemplateRooted(GetMovementTemplate().IsRooted());
+}
+
+void Creature::SetTemplateRooted(bool rooted)
+{
+    _staticFlags.ApplyFlag(CREATURE_STATIC_FLAG_SESSILE, rooted);
+    SetControlled(rooted, UNIT_STATE_ROOT);
 }
 
 bool Creature::hasQuest(uint32 quest_id) const
@@ -2753,6 +2770,7 @@ void Creature::GetRespawnPosition(float &x, float &y, float &z, float* ori, floa
 
 void Creature::InitializeMovementFlags()
 {
+    LoadTemplateRoot();
     // It does the same, for now
     UpdateMovementFlags();
 }
